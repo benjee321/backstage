@@ -1,51 +1,12 @@
-# Notice the v1beta3 version
-apiVersion: scaffolder.backstage.io/v1beta3
-kind: Template
-# some metadata about the template itself
+apiVersion: backstage.io/v1alpha1
+kind: Component
 metadata:
-  name: v1beta3-demo
-  title: Test Azure Action template
-  description: Modified stuff
+  name: ELB-Terraform-module
+  description: AWS ELB for network setup
+  annotations:
+    backstage.io/techdocs-ref: dir:.
 spec:
-  owner: andras.bene:cncf
   type: website
-
-  # these are the steps which are rendered in the frontend with the form input
-  parameters:
-    - title: Fill in some steps
-      required:
-        - pipelineId
-      properties:
-        pipelineId:
-          title: Pipeline Id
-          type: number
-          description: Pipeline id for running the pipeline
-          ui:autofocus: true
-          ui:options:
-            rows: 1
-
-  # here's the steps that are executed in series in the scaffolder backend
-  steps:
-     - id: run-pipeline
-       name: run pipeline
-       action: azure:pipeline:run
-       input:
-         pipelineId: ${{ parameters.pipelineId }}
-
-
-
-  #   - id: register
-  #     name: Register
-  #     action: catalog:register
-  #     input:
-  #       repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
-  #       catalogInfoPath: '/catalog-info.yaml'
-
-  # # some outputs which are saved along with the job for use in the frontend
-  # output:
-  #   links:
-  #     - title: Repository
-  #       url: ${{ steps['publish'].output.remoteUrl }}
-  #     - title: Open in catalog
-  #       icon: catalog
-  #       entityRef: ${{ steps['register'].output.entityRef }}
+  lifecycle: production
+  owner: andras.bene:cncf
+  system: aws-network
